@@ -1,0 +1,17 @@
+type Cluster {
+  id: String
+  name: String
+  region: String
+  status: String
+  url: String
+  nodesUrl: String,
+  version: String
+  updatePolicy: String
+  isUpToDate: Boolean
+  controlPlaneIsUpToDate: Boolean
+}
+
+type Query {
+  getClusters(projectId: String!): [Cluster]
+  getCluster(projectId: String!, clusterId: String!): Cluster
+}
