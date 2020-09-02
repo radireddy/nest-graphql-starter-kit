@@ -10,14 +10,6 @@ $ cd project
 $ npm install
 ```
 
-## Schema generation
-
-Everytime you add a new schema or modify the existing schema, use below commnad to generate schema calss.
-```bash
-# development
-$ npx ts-node ./src/generate-typings.ts
-```
-
 ## Running the app
 
 ```bash
