@@ -1,17 +1,10 @@
-import { Args, Query, Resolver, CONTEXT } from '@nestjs/graphql';
-import { Inject, Injectable, Scope } from '@nestjs/common';
-import { InMemoryLRUCache } from 'apollo-server-caching';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Cluster } from '../graphql.schema';
 import { ClustersService } from './clusters.service';
 
 @Resolver('Clusters')
-@Injectable({ scope: Scope.REQUEST })
 export class ClustersResolvers {
-  constructor(
-    @Inject(CONTEXT) context,
-    private readonly clustersService: ClustersService) {
-    this.clustersService.initialize( { context, cache: new InMemoryLRUCache() });
-  }
+  constructor(private readonly clustersService: ClustersService) {}
 
   @Query()
   async getClusters(

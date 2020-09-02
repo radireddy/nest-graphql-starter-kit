@@ -5,6 +5,8 @@
 ## Installation
 
 ```bash
+$ git clone https://github.com/radireddy/nest-graphql-starter-kit.git project
+$ cd project
 $ npm install
 ```
 
@@ -32,4 +34,12 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+## Schema generation
+
+Everytime when you add a new schema or modify the existing schema, use below commnad to generate schema calss.
+```bash
+# development
+$ npx ts-node ./src/generate-typings.ts
 ```

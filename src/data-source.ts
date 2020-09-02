@@ -1,17 +1,22 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { ConfigService } from '@nestjs/config';
+import { Inject } from '@nestjs/common';
+import { CONTEXT } from '@nestjs/graphql';
+import { InMemoryLRUCache } from 'apollo-server-caching';
 
 export class DataSource extends RESTDataSource {
-  private configService: ConfigService = null;
-  constructor(configService: ConfigService) {
+  constructor(
+    @Inject(CONTEXT) context,
+    private configService: ConfigService,
+  ) {
     super();
-    const host      = process.env.APIHOST || configService.get<string>('API_HOST');
+    const host      = process.env.APIHOST || this.configService.get<string>('API_HOST');
     const protocol = process.env.APIPROTOCOL === 'http' ? 'http' : 'https';
     const port      = process.env.APIPORT || (process.env.NODE_ENV === 'production' ? 80 : 443);
-    const basePath  = process.env.APIBASEPATH || configService.get<string>('API_BASE_PATH');
+    const basePath  = process.env.APIBASEPATH || this.configService.get<string>('API_BASE_PATH');
 
     this.baseURL = `${protocol}://${host}:${port}${basePath}`;
-    this.configService = configService;
+    this.initialize( { context, cache: new InMemoryLRUCache() });
   }
 
   willSendRequest(request) {
